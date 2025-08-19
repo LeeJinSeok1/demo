@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>HelloWorld!</h2>
+<div style="display: block">
+    <a href="/savePage">등록</a>
+    <a href="/pagingList">페이징리스트</a>
+</div>
+<div>
+    <table border="1">
+        <!-- 테이블 헤더 -->
+        <tr>
+            <th>이름</th>
+            <th>나이</th>
+            <th>직업</th>
+            <th>상세</th>
+        </tr>
+        <tr th:if="${memberList.size() == 0}">
+            <td colspan="4">등록된 데이터 없음</td>
+        </tr>
+        <tr th:each="list:${memberList}" th:if="${memberList.size() != 0}">
+            <td th:text="${list.name}"></td>
+            <td th:text="${list.age}"></td>
+            <td th:text="${list.job}"></td>
+            <td><a th:href="'/detail?id='+${list.id}">상세</a></td>
+        </tr>
+
+    </table>
+
+</div>
+
+</body>
+</html>

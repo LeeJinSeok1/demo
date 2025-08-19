@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .page_num .active {
+        color: red;
+    }
+</style>
+<body>
+<div>
+    <table border="1">
+        <!-- 테이블 헤더 -->
+        <tr>
+            <th>이름</th>
+            <th>나이</th>
+            <th>직업</th>
+            <th>상세</th>
+        </tr>
+        <tr th:if="${total == 0}">
+            <td colspan="4">등록된 데이터 없음</td>
+        </tr>
+        <tr th:each="list:${memberList}" th:if="${total != 0}">
+            <td th:text="${list.name}"></td>
+            <td th:text="${list.age}"></td>
+            <td th:text="${list.job}"></td>
+            <td><a th:href="'/detail?id='+${list.id}">상세</a></td>
+        </tr>
+
+    </table>
+    <div class="pagination mt-40" th:if="${total != 0}">
+        <a  th:href="@{/pagingList(page=1)}" class="page_num page_prev">
+            <span class="ico_24 ico_double_left_gray"></span>
+        </a>
+
+        <a th:href="${memberList.first} ? '#' : @{/pagingList(page=${memberList.number})}" class="page_num page_prev">
+            <span class="ico_24 ico_left_gray"></span>
+        </a>
+        <a th:each="page: ${#numbers.sequence(startPage, endPage)}"
+           th:href="@{/pagingList(page=${page})}"
+           th:class="${page == memberList.number + 1} ? 'page_num active'"
+           class="page_num"
+           th:text="${page}"></a>
+
+        <a th:href="${memberList.last} ? '#' : @{/pagingList(page=${memberList.number + 2})}" class="page_num page_prev">
+            <span class="ico_24 ico_right_gray"></span>
+        </a>
+        <a th:href="@{/pagingList(page=${memberList.totalPages})}" class="page_num page_prev">
+            <span class="ico_24 ico_double_right_gray"></span>
+        </a>
+    </div>
+</div>
+</body>
+</html>

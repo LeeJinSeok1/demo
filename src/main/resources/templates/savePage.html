@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Save</title>
+    <script src="/jquery-3.7.0.min.js"></script>
+    <style>
+        .file-preview {
+            margin-top: 10px;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .file-name {
+            margin-right: 10px;
+        }
+        .file-remove {
+            color: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<form action="" id="saveForm">
+    <input type="hidden" name="status" id="status" th:value="${member == null ? 'save':'update'}">
+    <input type="hidden" name="id" id="id" th:value="${member == null ? '':member.id}">
+    <input type="text" id="name" name="name" placeholder="name" th:value="${member == null ? '':member.name}"><br>
+    <input type="text" id="age" name="age" placeholder="age" th:value="${member == null ? '':member.age}"><br>
+    <input type="text" id="job" name="job" placeholder="job" th:value="${member == null ? '':member.job}"><br>
+
+    <input type="file" id="fileList" multiple>
+
+    <div class="file-preview">
+        <div id="existingFiles">
+            <!-- 기존 파일 표시 -->
+            <div th:if="${member.memberFileDTOList != null}"
+                 th:each="file : ${member.memberFileDTOList}"
+                 class="file-item existing-file"
+                 th:data-id="${file.id}">
+                <span class="file-name" th:text="${file.originalFileName}"></span>
+                <span class="file-remove" onclick="deleteExistingFile(this)">삭제</span>
+            </div>
+        </div>
+        <div id="newFiles">
+            <!-- 새 파일 미리보기 표시 -->
+        </div>
+    </div>
+
+    <button type="button" onclick="saveCheck()" th:text="${member == null ? '등록':'수정'}"></button>
+</form>
+
+<script>
+    let deleteFiles = []; // 삭제할 기존 파일 ID
+    let allFiles = [];    // 새로 추가된 파일
+
+    // 기존 파일 삭제
+    function deleteExistingFile(el) {
+        const parentDiv = el.parentElement;
+        const fileId = parentDiv.getAttribute("data-id");
+        deleteFiles.push(fileId); // DB 삭제용
+        parentDiv.remove();
+    }
+
+    // 새 파일 선택 시 미리보기 추가
+    document.getElementById("fileList").addEventListener("change", function(e) {
+        const files = Array.from(e.target.files);
+        files.forEach(file => allFiles.push(file));
+        renderFilePreview();
+        e.target.value = ""; // 같은 파일 다시 선택 가능
+    });
+
+    // 새 파일 미리보기 렌더링
+    function renderFilePreview() {
+        const preview = document.getElementById("newFiles");
+        preview.innerHTML = ""; // 새 파일 영역만 초기화
+
+        allFiles.forEach((file, index) => {
+            const item = document.createElement("div");
+            item.className = "file-item new-file";
+
+            const nameSpan = document.createElement("span");
+            nameSpan.className = "file-name";
+            nameSpan.textContent = file.name;
+
+            const removeBtn = document.createElement("span");
+            removeBtn.className = "file-remove";
+            removeBtn.textContent = "삭제";
+            removeBtn.onclick = () => {
+                allFiles.splice(index, 1);
+                renderFilePreview();
+            };
+
+            item.appendChild(nameSpan);
+            item.appendChild(removeBtn);
+            preview.appendChild(item);
+        });
+    }
+
+    // 저장/수정 처리
+    function saveCheck(){
+        const saveForm = document.getElementById("saveForm");
+        const formData = new FormData(saveForm);
+        const name = document.getElementById("name").value.trim();
+        const age = document.getElementById("age").value.trim();
+        const job = document.getElementById("job").value.trim();
+
+        if(name === '') {
+            alert("이름 입력해주세요.");
+            return;
+        }
+        if(age === '') {
+            alert("나이를 입력해주세요.");
+            return;
+        }
+        if(job === '') {
+            alert("직업을 입력해주세요.");
+            return;
+        }
+
+        // 새 파일 첨부
+        allFiles.forEach(file => formData.append("fileList", file));
+
+        // 삭제할 기존 파일 ID 첨부
+        deleteFiles.forEach(id => formData.append("deleteFileIds", id));
+
+        $.ajax({
+            type: "POST",
+            url: "/save",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if(response === "success") {
+                    alert("등록완료!");
+                    location.href = "/";
+                } else if(response === "updateFail") {
+                    alert("수정대상을 찾지 못함");
+                    location.href = "/";
+                } else {
+                    alert("등록실패!");
+                    location.href = "/";
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("에러 발생! 상태: " + status + ", 메시지: " + error);
+                console.error(xhr.responseText);
+            }
+        });
+    }
+</script>
+</body>
+</html>
