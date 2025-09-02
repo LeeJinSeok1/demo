@@ -1,0 +1,29 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 푸시될 때 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.SERVER_KEY }}
+
+      - name: Copy JAR to server
+        run: scp build/libs/${{ secrets.JAR_NAME }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      - name: Restart application
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            pkill -f '${{ secrets.JAR_NAME }}' || true
+            nohup java -jar ${DEPLOY_PATH}/${{ secrets.JAR_NAME }} > /dev/null 2>&1 &
+          "
