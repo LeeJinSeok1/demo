@@ -4,6 +4,8 @@ import com.example.demo.config.PathConfig;
 import com.example.demo.dto.MemberDTO;
 import com.example.demo.dto.MemberFileDTO;
 import com.example.demo.service.MemberService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,15 +20,18 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Tag(name = "Member API", description = "회원 관련 API")
 public class HomeController {
     private final PathConfig pathConfig;
     private final MemberService memberService;
+
     @GetMapping("/")
     public String home(Model model) {
         List<MemberDTO> memberDTOList = memberService.findAll();
         model.addAttribute("memberList",memberDTOList);
         return "index";
     }
+
     @GetMapping("/savePage")
     public String savePage(@RequestParam(required = false) Long id, Model model){
         MemberDTO memberDTO;
@@ -47,6 +52,7 @@ public class HomeController {
 
     @ResponseBody
     @PostMapping("/save")
+    @Operation(summary = "회원 조회", description = "ID로 회원 정보 조회")
     public String save(MemberDTO memberDTO){
         return memberService.save(memberDTO);
     }
