@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,15 +28,23 @@ public class HomeController {
         return "index";
     }
     @GetMapping("/savePage")
-    public String savePage(@RequestParam(required = false) Long id,Model model){
+    public String savePage(@RequestParam(required = false) Long id, Model model){
+        MemberDTO memberDTO;
+        List<MemberFileDTO> nullList = new ArrayList<>();
         if(id == null){
-            model.addAttribute("member",null);
-        }else{
-            MemberDTO memberDTO1 = memberService.findById(id);
-            model.addAttribute("member",memberDTO1);
+            // 빈 객체 생성
+            memberDTO = new MemberDTO();
+            memberDTO.setMemberFileDTOList(nullList); // null이면 뷰에서 오류 발생할 수 있으므로
+        } else {
+            memberDTO = memberService.findById(id);
+            if(memberDTO.getMemberFileDTOList() == null || memberDTO.getMemberFileDTOList().isEmpty()){
+                memberDTO.setMemberFileDTOList(nullList); // 안전하게 초기화
+            }
         }
+        model.addAttribute("member", memberDTO);
         return "savePage";
     }
+
     @ResponseBody
     @PostMapping("/save")
     public String save(MemberDTO memberDTO){
