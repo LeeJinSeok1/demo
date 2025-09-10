@@ -98,3 +98,45 @@ Caused by: org.hibernate.HibernateException: Unable to determine Dialect without
 	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-6.6.22.Final.jar:6.6.22.Final]
 	... 30 common frames omitted
 
+2025-09-10T09:07:15.081+09:00  INFO 26164 --- [main] com.example.demo.DemoApplication         : Starting DemoApplication using Java 17.0.16 with PID 26164 (C:\Users\dlwls\IdeaProjects\demo\build\classes\java\main started by dlwls in C:\Users\dlwls\IdeaProjects\demo)
+2025-09-10T09:07:15.084+09:00  INFO 26164 --- [main] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-09-10T09:07:15.535+09:00  INFO 26164 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-10T09:07:15.576+09:00  INFO 26164 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 32 ms. Found 2 JPA repository interfaces.
+2025-09-10T09:07:15.874+09:00  INFO 26164 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-09-10T09:07:15.884+09:00  INFO 26164 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-09-10T09:07:15.884+09:00  INFO 26164 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-09-10T09:07:15.924+09:00  INFO 26164 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-09-10T09:07:15.924+09:00  INFO 26164 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 794 ms
+2025-09-10T09:07:16.041+09:00  INFO 26164 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-10T09:07:16.075+09:00  INFO 26164 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.22.Final
+2025-09-10T09:07:16.103+09:00  INFO 26164 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-09-10T09:07:16.323+09:00  INFO 26164 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-10T09:07:16.344+09:00  INFO 26164 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-09-10T09:07:16.556+09:00  INFO 26164 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@563843f1
+2025-09-10T09:07:16.557+09:00  INFO 26164 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-09-10T09:07:16.619+09:00  INFO 26164 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 9.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-10T09:07:17.288+09:00  INFO 26164 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-10T09:07:17.341+09:00  INFO 26164 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-10T09:07:17.536+09:00  INFO 26164 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-09-10T09:07:17.948+09:00  INFO 26164 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-09-10T09:07:18.230+09:00  INFO 26164 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-09-10T09:07:18.236+09:00  INFO 26164 --- [main] com.example.demo.DemoApplication         : Started DemoApplication in 4.389 seconds (process running for 4.985)
+2025-09-10T09:07:29.376+09:00  INFO 26164 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-10T09:07:29.377+09:00  INFO 26164 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-09-10T09:07:29.377+09:00  INFO 26164 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-09-10T09:07:29.475+09:00 DEBUG 26164 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : select me1_0.id,me1_0.age,me1_0.job,me1_0.join_date,me1_0.name from member1 me1_0
+2025-09-10T09:07:32.197+09:00 DEBUG 26164 --- [http-nio-8080-exec-1] org.hibernate.SQL                        : select me1_0.id,me1_0.age,me1_0.job,me1_0.join_date,me1_0.name from member1 me1_0 order by me1_0.id desc limit ?
+2025-09-10T09:07:34.926+09:00 DEBUG 26164 --- [http-nio-8080-exec-3] org.hibernate.SQL                        : select me1_0.id,me1_0.age,me1_0.job,me1_0.join_date,me1_0.name from member1 me1_0 order by me1_0.id desc limit ?
+2025-09-10T09:07:44.624+09:00 DEBUG 26164 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : select me1_0.id,me1_0.age,me1_0.job,me1_0.join_date,me1_0.name from member1 me1_0
+2025-09-10T09:11:29.855+09:00  INFO 26164 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-10T09:11:30.209+09:00  INFO 26164 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-09-10T09:11:30.214+09:00  INFO 26164 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-09-10T09:11:30.217+09:00  INFO 26164 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-09-10T09:11:30.231+09:00  INFO 26164 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
