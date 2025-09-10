@@ -3,27 +3,20 @@ server:
   error:
     whitelabel:
       enabled: false
-  port: 8084  # ?? ?? ??
+  port: 8080
   servlet:
     session:
-      timeout: -1  # ?? ?? ??
-      tracking-modes: cookie  # ?? ?? ??? ??? ??
+      timeout: -1
+      tracking-modes: cookie
       cookie:
-        http-only: true  # ??? JavaScript?? ???? ???? ?? (?? ??)
-        secure: false  # HTTPS? ?? HTTP??? ??? ??? ? ??? ??
+        http-only: true
+        secure: false
 
 # data base
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/jinseok?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: root
-#    password: 1234
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://1.234.5.79:3306/test?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/demo01?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: jinseok
     password: 1234
 
@@ -38,37 +31,28 @@ spring:
       ddl-auto: update
       dialect: org.hibernate.dialect.MySQLDialect
 
-logging:
-  file:
-    name: ./logs/app.log
-  level:
-    root: error       # 전체 로그 중 error 이상만 기록
-    org.hibernate: error  # Hibernate 관련 예외만 기록
-
-
+# ?? ??
 #logging:
 #  file:
 #    name: ./logs/app.log
 #  level:
-#    org:
-#      hibernate:
-#        SQL: trace
-#        type:
-#          descriptor:
-#            sql:
-#              BasicBinder: trace
+#    root: error
+#    org.hibernate: error
+
+# ?? ??
+logging:
+  file:
+    name: ./logs/app.log
+  level:
+    org:
+      hibernate:
+        SQL: trace
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
 
 
 # ??? ?? ??
 spring.servlet.multipart.max-file-size: 100MB
 spring.servlet.multipart.max-request-size: 100MB
-
-
-
-
-
-
-
-
-
-
